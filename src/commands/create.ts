@@ -4,11 +4,11 @@ import { pool } from "../modules/sql";
 import { Player } from "../data/Player";
 import { Embed } from "../modules/embed";
 
-export class CommandCreate implements Command {
-  aliases = ["create"];
-  cmdDocs = {
+export const CommandCreate: Command = {
+  aliases: ["create"],
+  cmdDocs: {
     description: "Creates account",
-  }
+  },
   async execute(cmdArgs: CmdArgs): Promise<void | Message> {
     const { msg } = cmdArgs;
     let queryResult: number;

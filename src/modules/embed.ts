@@ -11,6 +11,6 @@ export class Embed extends MessageEmbed {
   constructor(options?: MessageEmbed | MessageEmbedOptions) {
     super(options);
     this.attachFiles(["./assets/Carrot.png"]);
-    this.setAuthor("Farmer Bot", "attachment://Carrot.png");
+    this.setAuthor("Cropmaster", "attachment://Carrot.png");
   }
 }

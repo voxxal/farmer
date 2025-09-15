@@ -5,17 +5,18 @@ import { Embed } from "../modules/embed";
 import { Crop } from "../data/Crop";
 import { sql } from "../modules/sql";
 import { Player } from "../data/Player";
+import { Upgrade } from "../data/Upgrade";
 
-export class CommandBuy implements Command {
-  aliases = ["buy", "b"];
-  cmdDocs = {
+export const CommandBuy: Command = {
+  aliases: ["buy", "b"],
+  cmdDocs: {
     description: "Buy something from the shop",
     args: ["crop | upgrade"],
-  };
+  },
   async execute(cmdArgs: CmdArgs): Promise<void | Message> {
     const { msg, args } = cmdArgs;
     const query = args.join(" ");
-    const product = shop.find((product) => {
+    let product = shop.find((product) => {
       return product.name.toLowerCase() === query.toLowerCase();
     });
     if (!product) {
@@ -38,13 +39,37 @@ export class CommandBuy implements Command {
         );
         return;
       }
-      switch (product.constructor) {
-        case Crop:
-          if (playerData.money >= product.cost) {
-              
+      // function isCrop(product: Crop | Upgrade): product is Crop {
+      //   return (product as Crop).plant !== undefined;
+      // }
+      switch (true) {
+        case "plant" in product: // figure this thing out, as it is no longer an instance of Crop
+          product = product as Crop;
+          if (!(playerData.money >= product.cost)) {
+            msg.channel.send(
+              new Embed({
+                title: "Shop",
+                description: `You need \`${
+                  product.cost - playerData.money
+                }\` more coins`,
+              })
+            );
+            return;
           }
+          playerData.money -= product.cost;
+          playerData.crops.unshift(product.id);
+          msg.channel.send(
+            new Embed({
+              title: "Shop",
+              description: `
+              ${msg.author.toString()}, has bought ${product.name}
+              You now have \`${playerData.money}\` coins
+              `,
+            })
+          );
           break;
       }
+      sql.update(msg.author.id, playerData);
     });
-  }
-}
+  },
+};

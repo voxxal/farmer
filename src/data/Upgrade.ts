@@ -4,13 +4,13 @@ interface UpgradeTempalate {
   id: string;
   name: string;
   cost: () => number;
-  effect: (playerData: Player) => void;
+  effect: ({ playerData, upgrade, cmdArgs }) => void;
   level: number;
 }
-export class Upgrade {
+export class Upgrade {//change to interface
   cost: () => number;
   name: string;
-  effect: (playerData: Player) => void;
+  effect: ({ playerData, upgrade, cmdArgs }) => void;
   level: number;
   id: string;
   constructor({ id, name, cost, effect, level }: UpgradeTempalate) {

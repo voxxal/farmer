@@ -15,4 +15,5 @@ export class Player {
   };
   crops: string[] = ["potato"];
   lastPlant = Date.now();
+  inventory: any;
 }

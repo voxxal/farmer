@@ -17,11 +17,11 @@ const entry = (
   `;
 };
 
-export class CommandHelp implements Command {
-  aliases = ["help", "h"];
-  cmdDocs = {
+export const CommandHelp: Command = {
+  aliases: ["help", "h"],
+  cmdDocs: {
     description: "Displays this message",
-  };
+  },
   async execute(cmdArgs: CmdArgs): Promise<void | Message> {
     const { msg } = cmdArgs;
     let full = "";
@@ -37,5 +37,5 @@ export class CommandHelp implements Command {
         description: full,
       })
     );
-  }
-}
+  },
+};

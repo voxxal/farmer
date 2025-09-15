@@ -1,9 +1,6 @@
 import { Crop } from "./Crop";
-import { crops } from "./crops";
 import { Upgrade } from "./Upgrade";
 import { upgrades } from "./upgrades";
+import { normalCrops } from "./collections/normalCrops";
 
-export const shop : (Crop | Upgrade)[] = [
-    ...crops,
-    ...upgrades
-]
+export const shop: (Crop | Upgrade)[] = [...normalCrops, ...upgrades];
